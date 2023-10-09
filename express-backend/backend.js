@@ -94,6 +94,7 @@ app.post('/users', (req, res) => {
 });
 
 function addUser(user) {
+    user.id = generateId();
     users['users_list'].push(user);
 }
 
@@ -110,6 +111,10 @@ app.delete('/users/:id', (req, res) => {
 
 function findIndexById(id) {
     return users['users_list'].findIndex( (user) => user['id'] === id);
+}
+
+function generateId() {
+    return Math.random().toString(36).slice(2, 8);
 }
 
 app.listen(port, () => {
