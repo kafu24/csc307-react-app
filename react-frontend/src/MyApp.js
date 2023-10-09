@@ -42,7 +42,7 @@ function MyApp() {
   async function makePostCall(person) {
     try {
       const response = await axios.post('http://localhost:8000/users', person);
-      return response;
+      return response.data;
     } catch (error) {
       console.log(error);
       return false;
