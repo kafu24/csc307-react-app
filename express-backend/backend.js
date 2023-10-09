@@ -81,6 +81,21 @@ function addUser(user) {
     users['users_list'].push(user);
 }
 
+app.delete('/users/:id', (req, res) => {
+    const id = req.params['id'];
+    let result = findIndexById(id);
+    if (result === undefined || result === -1) {
+        res.status(404).send('Resource not found.');
+    } else {
+        users['users_list'].splice(result, 1);
+        res.status(200).end();
+    }
+});
+
+function findIndexById(id) {
+    return users['users_list'].findIndex( (user) => user['id'] === id);
+}
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });     
