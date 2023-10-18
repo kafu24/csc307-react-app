@@ -19,6 +19,8 @@ async function getUsers(name, job) {
     result = await findUserByName(name);
   } else if (job && !name) {
     result = await findUserByJob(job);
+  } else if (job && name) {
+    result = await findUserByNameAndJob(name, job);
   }
   return result;
 }
@@ -43,6 +45,15 @@ async function addUser(user) {
   }
 }
 
+async function deleteUserById(id) {
+  try {
+    return await userModel.findByIdAndDelete(id);
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+}
+
 async function findUserByName(name) {
   return await userModel.find({ name: name });
 }
@@ -51,10 +62,16 @@ async function findUserByJob(job) {
   return await userModel.find({ job: job });
 }
 
+async function findUserByNameAndJob(name, job) {
+  return await userModel.find({ name: name, job: job })
+}
+
 export default {
   addUser,
   getUsers,
+  deleteUserById,
   findUserById,
   findUserByName,
   findUserByJob,
+  findUserByNameAndJob,
 };
